@@ -1,9 +1,25 @@
+import { useState } from "react";
+import { useEffect } from "react";
 
 
 function App() {
+
+  const [solution, setSolution] = useState(null)
+
+  useEffect(() => {
+    fetch('http://localhost:3001/solutions')            /* Fetch data using json-server endpoint */
+    .then(res => res.json())                            /* Get response and return json */
+    .then(json => {
+      // random int between 0 - 14
+      const randomSolution = json[Math.floor(Math.random()*json.length)]      /* Get a random number * it by length of array and round down to int, update solution from Null */
+      setSolution(randomSolution.word)
+    })
+  }, [setSolution])         /* Dependacy array, update when Solution changes */
+
   return (
     <div className="App">
       <h1>Wordle </h1>
+      {solution && <div>Solution is: {solution} </div>}
     </div>
   );
 }
@@ -18,7 +34,7 @@ data we need to track:
   -- past guesses
     -- an array of past guesses
     -- each past guess is an array of letter objects [{}, {}, {}, {}, {}]
-    -- each object represents a letter in the guess word {letter: 'a', color: 'yellow'}
+    -- each object represents a letter in the guess word {key: 'a', color: 'yellow'}
   -- current guess
     -- string 'hello'
   -- keypad letters
