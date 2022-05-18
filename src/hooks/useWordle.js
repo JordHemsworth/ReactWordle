@@ -4,13 +4,14 @@ const useWordle = (solution) => {
 
     const [turn, setTurn] = useState(0) 
     const [currentGuess, setCurrentGuess] = useState('')
-    const [guesses, setGuesses] = useState([]) // each guess is an array
-    const [history, setHistory] = useState(['hello']) // each guess is a string
+    const [guesses, setGuesses] = useState([...Array(6)]) // Creates an array of length 6 and spread empty elements across GuessesArray
+    const [history, setHistory] = useState([]) // each guess is a string
     const [isCorrect, setIsCorrect] = useState(false)
 
 // format a guess into an array of letter objects 
 // e.g. [{key: 'a', color: 'yellow'}]
 const formatGuess = () => {
+
     let solutionArray = [...solution]                           /* ... Spread syntax takes string and splits into array of letters  */
     let formattedGuess = [...currentGuess].map((l) => {         /* Map array into new array, Map fires function for each letter of array on each letter object (l) */
         return {key: l, color: 'grey'}
@@ -18,18 +19,17 @@ const formatGuess = () => {
 
     // Find any green letters
     formattedGuess.forEach((l, i) => {                  /* Cycle through formatted guess array and perform function for each item. */
-        if (solutionArray[i] === l.key) {                       /* Does letter in the position match same letter in index of solution array. */
+        if (solutionArray[i] === l.key) {                       /* if L is exact match with index of solution array, turn green */
             formattedGuess[i].color = 'green'
             solutionArray[i] = null                     /* Turn element in letter array to Null as can't be used again & is correct */
         }
     })
 
     // Find yellow letters
-
     formattedGuess.forEach((l, i) => {
-        if (solutionArray.includes(l.key) && l.color !== 'green') {
+        if (solutionArray.includes(l.key) && l.color !== 'green') {     /* If letter is correct but not in right place & not already coloured green, show yellow */
             formattedGuess[i].color = 'yellow'
-            solutionArray[solutionArray.indexOf(l.key)] = null
+            solutionArray[solutionArray.indexOf(l.key)] = null              /* Turn letter matched against to Null so can't double match */
         }
     })
 
@@ -40,8 +40,22 @@ const formatGuess = () => {
 // add a new guess to the guesses state
 // update the isCorrect state if the guess is correct
 // add one to the turn state
-const addNewGuess = () => {
-
+const addNewGuess = (formattedGuess) => {
+    if (currentGuess === solution) {
+        setIsCorrect(true)
+    }
+    setGuesses((prevGuesses) => {                       /* Accept previousGuess state */
+        let newGuesses = [...prevGuesses]               /* Spread previous Guesses */
+        newGuesses[turn] = formattedGuess               /* Update guesses array formatted guess with each turn they make*/
+        return newGuesses
+    })
+    setHistory((prevHistory) => {
+        return [...prevHistory, currentGuess]           /* Add currentGuess to history in string format */
+    })
+    setTurn((prevTurn) => {
+        return prevTurn + 1
+    })
+    setCurrentGuess('')
 }
 
 // handle keyup event & track current guess
@@ -70,7 +84,7 @@ const handleKeyup = ({key}) => {
         } 
 
         const formatted = formatGuess()       /* Call function only if all conditions are valid */
-        console.log(formatted)
+        addNewGuess(formatted)
     }
 
     if (key === 'Backspace') {
@@ -87,8 +101,6 @@ const handleKeyup = ({key}) => {
             })
         }
     }
-
-    /* If currentGuess.length == 5, then setGuess, only add if turn < 5, if Guess matches solution, then isCorrect returns true, else setHistory for invalid guess */
 
 }
 
