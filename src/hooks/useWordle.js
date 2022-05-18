@@ -11,7 +11,30 @@ const useWordle = (solution) => {
 // format a guess into an array of letter objects 
 // e.g. [{key: 'a', color: 'yellow'}]
 const formatGuess = () => {
-    console.log('Formatting the guess -', currentGuess)
+    let solutionArray = [...solution]                           /* ... Spread syntax takes string and splits into array of letters  */
+    let formattedGuess = [...currentGuess].map((l) => {         /* Map array into new array, Map fires function for each letter of array on each letter object (l) */
+        return {key: l, color: 'grey'}
+    })
+
+    // Find any green letters
+    formattedGuess.forEach((l, i) => {                  /* Cycle through formatted guess array and perform function for each item. */
+        if (solutionArray[i] === l.key) {                       /* Does letter in the position match same letter in index of solution array. */
+            formattedGuess[i].color = 'green'
+            solutionArray[i] = null                     /* Turn element in letter array to Null as can't be used again & is correct */
+        }
+    })
+
+    // Find yellow letters
+
+    formattedGuess.forEach((l, i) => {
+        if (solutionArray.includes(l.key) && l.color !== 'green') {
+            formattedGuess[i].color = 'yellow'
+            solutionArray[solutionArray.indexOf(l.key)] = null
+        }
+    })
+
+    return formattedGuess
+
 }
 
 // add a new guess to the guesses state
@@ -45,7 +68,9 @@ const handleKeyup = ({key}) => {
             console.log('Word must be 5 chars long')
             return
         } 
-        formatGuess()       /* Call function only if all conditions are valid */
+
+        const formatted = formatGuess()       /* Call function only if all conditions are valid */
+        console.log(formatted)
     }
 
     if (key === 'Backspace') {
