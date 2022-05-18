@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Row( {guess}) {
+export default function Row( {guess, currentGuess}) {
 
     if (guess) {
         return (
@@ -8,6 +8,21 @@ export default function Row( {guess}) {
                 {guess.map((l, i) => (                                  /* If the guess has a value, return a row with letters in each square */
                     <div key={i} className={l.color}> {l.key} </div>
                 ))}
+            </div>
+        )
+    }
+
+    if (currentGuess) {
+        let letters = currentGuess.split('')            /* Split currentguess string into letters */
+
+        return (                                       
+            <div className="row current">
+                {letters.map((letter, i) => (                           /* Return template for each letter, give index key. */
+                    <div key={i} className="filled"> {letter} </div>
+                ))}
+                {[...Array(5 - letters.length)].map((v, i) => (             /* Always show 5 boxes, takeaway empty box for each letter added. v is undefined, used index as key */
+                    <div key={i}></div>
+                ))}            
             </div>
         )
     }
