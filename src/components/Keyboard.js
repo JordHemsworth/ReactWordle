@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-export default function Input () {
+export default function Keyboard ( {usedKeys}) {
   const [letters, setLetters] = useState(null)
 
   useEffect(() => {
@@ -14,7 +14,9 @@ export default function Input () {
   return (
     <div className='keypad'>
       {letters && letters.map(l => {
-          return <div key={l.key}>{l.key.toUpperCase()}</div>             /* Return letter from json key, make uppercase */
+          const color = usedKeys[l.key]
+
+          return <div key={l.key} className={color}>{l.key.toUpperCase()}</div>             /* Return letter from json key, make uppercase */
         })}
     </div>
   )

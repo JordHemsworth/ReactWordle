@@ -7,6 +7,7 @@ const useWordle = (solution) => {
     const [guesses, setGuesses] = useState([...Array(6)]) // Creates an array of length 6 and spread empty elements across GuessesArray
     const [history, setHistory] = useState([]) // each guess is a string
     const [isCorrect, setIsCorrect] = useState(false)
+    const [usedKeys, setUsedKeys] = useState({})        // {a: 'green', b: 'yellow', c: 'grey'}
 
 // format a guess into an array of letter objects 
 // e.g. [{key: 'a', color: 'yellow'}]
@@ -54,6 +55,27 @@ const addNewGuess = (formattedGuess) => {
     })
     setTurn((prevTurn) => {
         return prevTurn + 1
+    })
+    setUsedKeys((prevUsedKeys) => {
+        let newKeys = {...prevUsedKeys}
+
+        formattedGuess.forEach((l) => {                     /* l is letter object */
+            const currentColor = newKeys[l.key]
+
+            if (l.color === 'green') {
+                newKeys[l.key] = 'green'
+                return
+            }
+            if (l.color === 'yellow' && currentColor !== 'green') {             /* Ensure key isn't already correct in newKeys */
+                newKeys[l.key] = 'yellow'
+                return
+            }
+            if (l.color === 'grey' && currentColor !== 'green' && currentColor !== 'yellow') {
+                newKeys[l.key] = 'grey'
+                return
+            }
+        })
+        return newKeys
     })
     setCurrentGuess('')
 }
@@ -104,7 +126,7 @@ const handleKeyup = ({key}) => {
 
 }
 
-return {turn, currentGuess, guesses, isCorrect, handleKeyup}
+return {turn, currentGuess, guesses, isCorrect, usedKeys, handleKeyup,}
 
 }
 
