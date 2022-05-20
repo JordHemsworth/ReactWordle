@@ -6,8 +6,6 @@ import Keyboard from './Keyboard'
 
 
 
-
-
 export default function Wordle ({ solution }) {
 
     const {currentGuess, handleKeyup, guesses, isCorrect, turn, usedKeys} = useWordle(solution)
@@ -15,12 +13,19 @@ export default function Wordle ({ solution }) {
     useEffect(() => {
         window.addEventListener('keyup', handleKeyup)
 
-        return () => window.removeEventListener('keyup', handleKeyup)           /* Detach event listener to prevent having many listeners with each event */
-    }, [handleKeyup])
+        if (isCorrect) {
+          console.log('Congrats, you won!')
+          window.removeEventListener('keyup', handleKeyup)          /* Remove eventlistener so no more letters can be added if game is won */
+        }
 
-    useEffect(() => {
-        console.log(guesses, turn, isCorrect)
-      }, [guesses, turn, isCorrect])              /* Update when any of these dependancies are changed */
+        if (turn > 5) {
+          console.log('Out of guesses!')
+          window.removeEventListener('keyup', handleKeyup)          /* Remove eventlistener so no more letters can be added if game is won */
+        }
+
+        return () => window.removeEventListener('keyup', handleKeyup)           /* Detach event listener to prevent having many listeners with each event */
+    }, [handleKeyup, isCorrect, turn])
+
     
   return (
     <div>
