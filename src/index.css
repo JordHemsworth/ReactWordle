@@ -120,6 +120,15 @@ h1 {
   letter-spacing: 1px;
 }
 
+.modal .replay {
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 3px;
+  background-color: #ff004c;
+  color: white;
+  border-radius: 0.5rem;
+}
+
 
 
 /* Animations */
