@@ -40,10 +40,7 @@
 ## About The Project
 
 <div align="center">
-  <a href="http://35.173.49.241/">
-    <img src="public/images/WordleReact.png" alt="screenshot" width="920" height="517">
-  </a>
-    <p> Click to view site! </p>
+    <img src="public/images/WordleReact.png" alt="screenshot" width="929" height="784">
 </div>
 
 <p align="right">(<a href="#top">back to top</a>)</p>
