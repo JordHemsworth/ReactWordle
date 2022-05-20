@@ -3,15 +3,13 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/JordHemsworth/GameAPI">
-    <img src="public/images/IGDB_README.jpg" alt="Logo" width="200" height="120">
-  </a>
 
-<h3 align="center">Game API</h3>
+<h3 align="center">Wordle Clone</h3>
 
   <p align="center">
-    A fun project to develop my React skills, based on the popular word game - [Wordle](https://www.nytimes.com/games/wordle/index.html)
+    A fun project to develop my React skills, based on the popular word game <a href ="https://www.nytimes.com/games/wordle/index.html">Wordle</a>
   </p>
+  
 </div>
 
 
@@ -56,7 +54,7 @@
 
 * [React](https://reactjs.org/)
 * This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-* [Wordle](https://www.nytimes.com/games/wordle/index.html)
+* Based on - [Wordle](https://www.nytimes.com/games/wordle/index.html)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -94,13 +92,12 @@ To install the site locally, follow the steps below.
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ### To Do
-1. Work on a more responsive design for Mobile.
+1. Look at a Wordle API for wider range of solutions
 
-2. Implement modals for screenshots and trailer
+2. Implement press functionality on keypad 
 
-3. Detailed other pages such as full games list with pagination. 
+3. Night mode
 
-4. Work on Livewire simultaneous requests.
 
 <!-- CONTACT -->
 ## Contact
